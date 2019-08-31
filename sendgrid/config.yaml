@@ -1,0 +1,4 @@
+handler: main.run
+runtime: python3.6
+file: main.py
+httptrigger: true
