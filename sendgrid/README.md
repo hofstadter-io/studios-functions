@@ -16,12 +16,25 @@ cd sendgrid
 Create the secret for your API key.
 
 ```bash
+# Put your API key into a file
+echo "<SENDGRID_APIKEY>" > secrets/apikey.env
 
+# Create your secret in Hofstadter Studios
+hof secrets create sendgrid-secret secrets/apikey.env
 ```
 
+TODO:
 
-Edit the configuration and content
+Edit the configuration and content...
+
+Push the function...
+
+Call the function...
+
+Integrate with a Studios app...
 
 ### References
+
+https://github.com/sendgrid/sendgrid-python/
 
 https://github.com/sendgrid/sendgrid-python/blob/master/examples/helpers/mail_example.py
