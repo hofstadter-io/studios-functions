@@ -20,18 +20,22 @@ def readEmail(which_email):
     return subject, text, html
 
 
-def sendEmail(to_emails, from_email, which_email, data):
+def sendEmail(config, data):
 
-    subject, text, html = readEmail(which_email)
+    subject, text, html = readEmail(config['which_email'])
 
     print(subject)
     print(text)
     print(html)
     print(os.environ.get('SENDGRID_API_KEY'))
 
+    ts = []
+    for t in config['to_emails']:
+        ts.append(To(t['email'], t['name']))
+
     message = Mail(
-        from_email=from_email,
-        to_emails=to_emails,
+        from_email=From(config['from_email'], config['from_name']),
+        to_emails=ts,
         subject=Subject(subject),
         plain_text_content=PlainTextContent(text),
         html_content=HtmlContent(html)
@@ -54,15 +58,23 @@ def sendEmail(to_emails, from_email, which_email, data):
 def run(event, context):
     print(event)
 
-    to_emails = "verdverm@gmail.com"
-    from_email = "no-reply@hofstadter.io"
-    which_email= "emails/welcome"
+    config = {
+        "to_emails": [
+            {
+                "name": "verdverm",
+                "email": "verdverm@gmail.com"
+            }
+        ],
+        "from_name": "Hofstadter Studios",
+        "from_email": "no-reply@hofstadter.io",
+        "which_email": "emails/welcome"
+    }
 
     data = {
         "name": "verdverm"
     }
 
-    sendEmail(to_emails, from_email, which_email, data)
+    sendEmail(config, data)
     return 'message sent'
 
 
